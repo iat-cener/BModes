@@ -24,23 +24,23 @@ include_directories( ${CMAKE_Fortran_MODULE_DIRECTORY} )
 get_filename_component(FCNAME ${CMAKE_Fortran_COMPILER} NAME)
 
 # By default we set the preprocessor directive
-if (FCNAME MATCHES "gfortran.*")
+if (${CMAKE_Fortran_COMPILER_ID} STREQUAL "GNU")
    set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -cpp")
 elseif(FCNAME MATCHES "ifort.*")
    set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fpp")
-endif (FCNAME MATCHES "gfortran.*")
+endif ()
 
 # Set the position independent code directive on architectures that support it
 if (APPLE OR UNIX)
-   if (FCNAME MATCHES "gfortran.*")	# bjj: this probably works on intel fortran for mac/linux, but I have not tested
+   if (${CMAKE_Fortran_COMPILER_ID} STREQUAL "GNU")	# bjj: this probably works on intel fortran for mac/linux, but I have not tested
       set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fPIC")
-   endif (FCNAME MATCHES "gfortran.*")
+   endif ()
 endif (APPLE OR UNIX)
 
 # Force free-form compilation
-if (FCNAME MATCHES "gfortran.*")
+if (${CMAKE_Fortran_COMPILER_ID} STREQUAL "GNU")
   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -ffree-line-length-none")
-endif (FCNAME MATCHES "gfortran.*")
+endif ()
 
 
 # use static libraries
