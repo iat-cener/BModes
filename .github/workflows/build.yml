@@ -1,6 +1,10 @@
 name: BModes build
 
-on: [push]
+on:
+  workflow_dispatch:
+    
+  release:
+    types: [published]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -36,5 +40,22 @@ jobs:
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE
+      
+    - name: Upload Artifact
+      if: ${{ github.event_name == 'release' && github.event.action == 'published' }}
+      uses: actions/upload-artifact@v2.2.4
+      with:
+        name: bmodes-${{ runner.os }}
+        path: ${{github.workspace}}/src/build/bmodes/bmodes*
+
+    - name: Upload binaries to release
+      if: ${{ github.event_name == 'release' && github.event.action == 'published' }}
+      uses: xresloader/upload-to-github-release@v1.3.2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        file: bmodes-${{ runner.os }}
+        tags: true
+        draft: false
 
 
