@@ -32,3 +32,5 @@ Doxygen
 .DS_Store
 
 *~lock.*
+
+src/build/
