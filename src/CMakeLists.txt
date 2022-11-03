@@ -5,7 +5,7 @@ project(BMODES Fortran)
 # Set default installation directory
 get_filename_component(default_install
   "${CMAKE_SOURCE_DIR}/../install" ABSOLUTE)
-set(CMAKE_INSTALL_PREFIX ${default_install} CACHE string
+set(CMAKE_INSTALL_PREFIX ${default_install} CACHE STRING
   "Choose installation directory; default bmodes/install" FORCE)
 option(BUILD_SHARED_LIBS "Enabled building shared libraries" off)
 
@@ -50,8 +50,9 @@ if (WIN32)
   endif (FCNAME MATCHES "ifort.*")
    
 endif(WIN32)
-   
-
+if (${CMAKE_Fortran_COMPILER_ID} STREQUAL "GNU")   
+  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -static")
+endif()
 
 add_subdirectory(NWTC_Library_v1)
 add_subdirectory(bmodes)
