@@ -19,7 +19,7 @@ elseif (WIN32)
   endif ()
 endif (APPLE OR UNIX)
 
-message(${NWTCLIBS_SOURCES})
+
 add_library(nwtclibs  ${NWTCLIBS_SOURCES})
 target_link_libraries(nwtclibs ${LAPACK_LIBRARIES} ${CMAKE_DL_LIBS})
 
