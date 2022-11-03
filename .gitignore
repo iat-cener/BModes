@@ -34,3 +34,4 @@ Doxygen
 *~lock.*
 
 src/build/
+.vscode
