@@ -18,7 +18,7 @@ jobs:
         os: [ubuntu-latest, windows-latest]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3.3.0
 
     - name: Create Build Environment
       # Some projects don't allow in-source building, so create a separate build directory
@@ -43,14 +43,14 @@ jobs:
       
     - name: Upload Artifact
       if: ${{ github.event_name == 'release' && github.event.action == 'published' }}
-      uses: actions/upload-artifact@v3.1.1
+      uses: actions/upload-artifact@v3.1.2
       with:
         name: bmodes-${{ runner.os }}
         path: ${{github.workspace}}/src/build/bmodes/bmodes*
 
     - name: Upload binaries to release
       if: ${{ github.event_name == 'release' && github.event.action == 'published' }}
-      uses: svenstaro/upload-release-action@2.3.0
+      uses: svenstaro/upload-release-action@2.4.0
       with:
         file: ${{github.workspace}}/src/build/bmodes/bmodes*
         file_glob: true
